@@ -297,6 +297,55 @@ def initialize_rag_system(api_key):
         st.success('✅ 系统初始化成功！')
         return True
 
+def show_footer_info():
+    """显示底部信息"""
+    st.markdown("---")
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # 功能介绍
+    with st.expander("ℹ️ 系统功能介绍", expanded=False):
+        st.markdown("""
+        ### 🌟 主要功能
+        - **🔍 智能检索**: 基于TF-IDF向量化的语义搜索
+        - **🤖 AI问答**: 集成DeepSeek API的智能回答生成
+        - **📚 文档管理**: 自动加载和处理红楼梦文本
+        - **⚡ 缓存优化**: 智能缓存机制，提升响应速度
+        - **💬 聊天体验**: 类ChatGPT的对话式交互
+        - **📖 文档溯源**: 显示答案来源和相似度评分
+        
+        ### 💡 使用技巧
+        - 可以询问人物、情节、诗词、象征意义等任何关于红楼梦的问题
+        - 使用侧边栏的示例问题快速开始
+        - 查看参考文档片段了解答案来源
+        - 使用快捷操作按钮探索不同主题
+        """)
+    
+    # 底部版权信息
+    st.markdown("""
+    <div style="
+        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+        padding: 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        margin-top: 2rem;
+        border: 1px solid #e0e0e0;
+    ">
+        <h4 style="color: #8B4513; margin-bottom: 1rem;">📚 红楼梦RAG问答系统</h4>
+        <p style="color: #666; margin-bottom: 1rem;">
+            基于 <strong>DeepSeek API</strong> 构建 | 采用 <strong>RAG技术</strong> | 使用 <strong>Streamlit</strong> 开发
+        </p>
+        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+            <span style="color: #555;">🔗 <a href="https://platform.deepseek.com/" target="_blank" style="color: #8B4513; text-decoration: none;">DeepSeek平台</a></span>
+            <span style="color: #555;">📖 <a href="https://streamlit.io/" target="_blank" style="color: #8B4513; text-decoration: none;">Streamlit官网</a></span>
+            <span style="color: #555;">💻 <a href="https://github.com/taskPyroer/RedMansionRAG" target="_blank" style="color: #8B4513; text-decoration: none;">GitHub源码</a></span>
+            <span style="color: #555;">🔗 <a href="https://docs.taskpyro.cn/assets/mp-qr-xRjY1oQw.png" target="_blank" style="color: #8B4513; text-decoration: none;">公众号</a></span>
+        </div>
+        <p style="color: #888; font-size: 0.8rem; margin-top: 1rem;">
+            "满纸荒唐言，一把辛酸泪。都云作者痴，谁解其中味？" - 曹雪芹
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
 def main():
     """主函数"""
     initialize_session_state()
@@ -455,6 +504,8 @@ def main():
         
         💡 **提示**: 默认情况下，API密钥仅在当前会话中临时缓存，不会保存到文件。如需持久化保存，请勾选"保存API密钥到配置文件"选项。
         """)
+        # 显示底部信息
+        show_footer_info()
         return
     
     if not st.session_state.system_initialized:
@@ -466,6 +517,8 @@ def main():
                 st.info("💡 检测到缓存文件，请点击侧边栏的'加载缓存数据'按钮快速启动系统")
         else:
             st.info("💡 请点击侧边栏的'初始化系统'按钮来加载红楼梦文档")
+        # 显示底部信息
+        show_footer_info()
         return
     
     # 主要对话区域
@@ -641,51 +694,8 @@ def main():
         with col4:
             st.metric("🤖 AI模型", "DeepSeek")
     
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # 功能介绍
-    with st.expander("ℹ️ 系统功能介绍", expanded=False):
-        st.markdown("""
-        ### 🌟 主要功能
-        - **🔍 智能检索**: 基于TF-IDF向量化的语义搜索
-        - **🤖 AI问答**: 集成DeepSeek API的智能回答生成
-        - **📚 文档管理**: 自动加载和处理红楼梦文本
-        - **⚡ 缓存优化**: 智能缓存机制，提升响应速度
-        - **💬 聊天体验**: 类ChatGPT的对话式交互
-        - **📖 文档溯源**: 显示答案来源和相似度评分
-        
-        ### 💡 使用技巧
-        - 可以询问人物、情节、诗词、象征意义等任何关于红楼梦的问题
-        - 使用侧边栏的示例问题快速开始
-        - 查看参考文档片段了解答案来源
-        - 使用快捷操作按钮探索不同主题
-        """)
-    
-    # 底部版权信息
-    st.markdown("""
-    <div style="
-        background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-        padding: 2rem;
-        border-radius: 1rem;
-        text-align: center;
-        margin-top: 2rem;
-        border: 1px solid #e0e0e0;
-    ">
-        <h4 style="color: #8B4513; margin-bottom: 1rem;">📚 红楼梦RAG问答系统</h4>
-        <p style="color: #666; margin-bottom: 1rem;">
-            基于 <strong>DeepSeek API</strong> 构建 | 采用 <strong>RAG技术</strong> | 使用 <strong>Streamlit</strong> 开发
-        </p>
-        <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
-            <span style="color: #555;">🔗 <a href="https://platform.deepseek.com/" target="_blank" style="color: #8B4513; text-decoration: none;">DeepSeek平台</a></span>
-            <span style="color: #555;">📖 <a href="https://streamlit.io/" target="_blank" style="color: #8B4513; text-decoration: none;">Streamlit官网</a></span>
-            <span style="color: #555;">💻 <a href="https://github.com/taskPyroer/RedMansionRAG" target="_blank" style="color: #8B4513; text-decoration: none;">GitHub源码</a></span>
-            <span style="color: #555;">🔗 <a href="https://docs.taskpyro.cn/assets/mp-qr-xRjY1oQw.png" target="_blank" style="color: #8B4513; text-decoration: none;">公众号</a></span>
-        </div>
-        <p style="color: #888; font-size: 0.8rem; margin-top: 1rem;">
-            "满纸荒唐言，一把辛酸泪。都云作者痴，谁解其中味？" - 曹雪芹
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    # 显示底部信息
+    show_footer_info()
 
 if __name__ == "__main__":
     main()
